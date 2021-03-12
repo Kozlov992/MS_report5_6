@@ -1,0 +1,91 @@
+\documentclass[a4paper]{article}
+\input{header}
+\begin{document}
+\input{title}
+\tableofcontents
+\addtocontents{toc}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoffigures
+\addtocontents{lof}{~\hfill\textbf{Страница}\par}
+\newpage
+\listoftables
+\addtocontents{lot}{~\hfill\textbf{Страница}\par}
+\newpage
+\section{Постановка задачи}
+\begin{enumerate}
+    \item Сгенерировать двумерные выборки размерами $20,\,60,\,100$ для нормального двумерного распределения $N(x,y,0,0,1,1,\rho)$.\\
+    Коэффициент корреляции $\rho$ взять равным $0,\,0.5,\,0.9$.\\
+    Каждая выборка генерируется $1000$ раз и для неё вычисляются: среднее значение, среднее значение квадрата и дисперсия коэффициентов корреляции Пирсона, Спирмена и квадрантного коэффициента корреляции.\\
+    Повторить все вычисления для смеси нормальных распределений:
+    \begin{equation*}
+        f(x,y)=0.9N(x,y,0,0,1,1,0.9)+0.1N(x,y,0,0,10,10,-0.9).
+    \end{equation*}
+    Изобразить сгенерированные точки на плоскости и нарисовать эллипс
+    равновероятности.
+\end{enumerate}
+\section{Теория}
+\subsection{Двумерное нормальное распределение}
+Двумерная случайная величина $(X, Y)$ называется распределенной нормально, если её плотность вероятности определяется формулой
+\begin{align}
+    N(x,y,\overline{x},\overline{y},\sigma_x,\sigma_y,\rho)&=\frac{1}{2\pi\sigma_x\sigma_y\sqrt{1-\rho^2}}\times\nonumber\\
+    &\times\exp\left\{-\frac{1}{2(1-\rho^2)}\left[\frac{\left(x-\overline{x}\right)^2}{\sigma_x^2}-2\rho\frac{(x-\overline{x})(y-\overline{y})}{\sigma_x\sigma_y}+\frac{\left(y-\overline{y}\right)^2}{\sigma_y^2}\right]\right\},
+\end{align}
+где $\overline{x},\,\overline{y},\sigma_x,\sigma_y$ - математические ожидания и средние квадратические отклонения компонент $X,\,Y$ соответственно, а $\rho\:-$ коэффициент корреляции. 
+\subsection{Корреляционный момент и коэффициент корреляции}
+\textit{Корреляционный момент} (\textit{ковариация}) двух случайных величин $X, Y$:
+\begin{equation}
+    K = \cov{(X,Y)}=\mathbf{M}\left[(X-\overline{x})(Y-\overline{y})\right].
+\end{equation}
+\textit{Коэффициент корреляции} $\rho$ случайных величин $X,Y$:
+\begin{equation}
+    \rho=\frac{K}{\sigma_x\sigma_y}.
+\end{equation}
+\subsection{Выборочные коэффициенты корреляции}
+\subsubsection{Выборочный коэффициент корреляции Пирсона}
+\textit{Выборочный коэффициент корреляции Пирсона}:
+\begin{equation}
+    r=\frac{\frac{1}{n}\sum_{i=1}^n \left(x_i-\overline{x}\right)\left(y_i-\overline{y}\right)}{\sqrt{\frac{1}{n}\sum_{i=1}^n\left(x_i-\overline{x}\right)^2 \frac{1}{n}\sum_{i=1}^n\left(y_i-\overline{y}\right)^2}}=\frac{K}{s_X s_Y},
+\end{equation}
+где $K,\,s_X^2,\,s_Y^2\:-$ выборочные ковариация и дисперсии случайных величин $X, Y$.
+\subsubsection{Выборочный квадрантный коэффициент корреляции}
+\begin{equation}
+    r_Q=\frac{(n_1+n_3)-(n_2+n_4)}{n},
+\end{equation}
+где $n_1,n_2,n_3,n_4\:-$ количества точек с координатами $(x_i,y_i)$, попавшими соответственно в I, II, III и IV квадранты декартовой системы с осями $x^'=x-\med{x},\,y^'=y-\med{y}$ и с центром в точке с координатами $(\med{x},\med{y})$.
+\subsubsection{Выборочный коэффициент ранговой корреляции Спирмена}
+Обозначим ранги, соотвествующие значениям переменной $X$, через $u$, а ранги, соответствующие значениям переменной $Y$, $-$ через $v$.
+\\\\
+\textit{Выборочный коэффициент ранговой корреляции Спирмена}:
+\begin{equation}
+    r_S=\frac{\frac{1}{n}\sum_{i=1}^n \left(u_i-\overline{u}\right)\left(v_i-\overline{v}\right)}{\sqrt{\frac{1}{n}\sum_{i=1}^n\left(u_i-\overline{u}\right)^2 \frac{1}{n}\sum_{i=1}^n\left(v_i-\overline{v}\right)^2}},
+\end{equation}
+где $\overline{u}=\overline{v}=\frac{1+2+...+n}{n}=\frac{n+1}{2}\,-$ среднее значение рангов.
+\subsection{Эллипсы рассеивания}
+Уравнение проекции эллипса рассеивания на плоскость $xOy$:
+\begin{equation}\label{eq:ellipse}
+    \frac{\left(x-\overline{x}\right)^2}{\sigma_x^2}-2\rho\frac{(x-\overline{x})(y-\overline{y})}{\sigma_x\sigma_y}+\frac{\left(y-\overline{y}\right)^2}{\sigma_y^2}=C,\;\;C\,-\,\text{const}.
+\end{equation}
+Центр эллипса \eqref{eq:ellipse} находится в точке с координатами $(\overline{x},\overline{y})$, оси симметрии эллипса составляют с осью $Ox$ углы, определяемые уравнением
+\begin{equation}
+    \tan{2\alpha}=\frac{2\rho\sigma_x\sigma_y}{\sigma_x^2-\sigma_y^2}.
+\end{equation}
+\section{Реализация}
+Лабораторная работа выполнена на языках Python и R в средах PyCharm, Jupyter Notebook, R Studio с использованием следующих библиотек:
+\begin{itemize}
+    \item Python:
+    \begin{enumerate}
+        \item scipy (генерация выборок)
+        \item statsmodels (построение э. ф. р.)
+        \item matplotlib, seaborn (визуализация, построение гистограмм и боксплотов)
+        \item numpy (вычисление ряда числовых характеристик)
+    \end{enumerate}
+    \item R:
+    \begin{enumerate}
+        \item kmlShape (нахождение дискретного расстояния Фреше)
+        \item kableExtra (оформление)
+\end{enumerate}
+\end{itemize}
+\section{Результаты}
+\section{Обсуждение}
+\section*{Примечание}
+\end{document}
