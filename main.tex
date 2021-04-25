@@ -27,24 +27,38 @@
 \subsection{Двумерное нормальное распределение}
 Двумерная случайная величина $(X, Y)$ называется распределенной нормально, если её плотность вероятности определяется формулой
 \begin{align}
-    N(x,y,\overline{x},\overline{y},\sigma_x,\sigma_y,\rho)&=\frac{1}{2\pi\sigma_x\sigma_y\sqrt{1-\rho^2}}\times\nonumber\\
-    &\times\exp\left\{-\frac{1}{2(1-\rho^2)}\left[\frac{\left(x-\overline{x}\right)^2}{\sigma_x^2}-2\rho\frac{(x-\overline{x})(y-\overline{y})}{\sigma_x\sigma_y}+\frac{\left(y-\overline{y}\right)^2}{\sigma_y^2}\right]\right\},
+    N(x,y,\overline{x},\overline{y},\sigma_x,\sigma_y,\rho_{XY}^{})&=\frac{1}{2\pi\sigma_x\sigma_y\sqrt{1-\rho_{XY}^2}}\times\nonumber\\
+    &\times\exp\left\{-\frac{1}{2(1-\rho_{XY}^2)}\left[\frac{\left(x-\overline{x}\right)^2}{\sigma_x^2}-2\rho_{XY}^{}\frac{(x-\overline{x})(y-\overline{y})}{\sigma_x\sigma_y}+\frac{\left(y-\overline{y}\right)^2}{\sigma_y^2}\right]\right\},
 \end{align}
-где $\overline{x},\,\overline{y},\sigma_x,\sigma_y$ - математические ожидания и средние квадратические отклонения компонент $X,\,Y$ соответственно, а $\rho\:-$ коэффициент корреляции. 
+где $\overline{x},\,\overline{y},\sigma_x,\sigma_y$ - математические ожидания и средние квадратические отклонения компонент $X,\,Y$ соответственно, а $\rho_{XY}^{}\:-$ коэффициент корреляции. 
 \subsection{Корреляционный момент и коэффициент корреляции}
 \textit{Корреляционный момент} (\textit{ковариация}) двух случайных величин $X, Y$:
 \begin{equation}
-    K = \cov{(X,Y)}=\mathbf{M}\left[(X-\overline{x})(Y-\overline{y})\right].
+    K_{XY} = \cov{(X,Y)}=\mathbf{M}\left[(X-\overline{x})(Y-\overline{y})\right].
 \end{equation}
-\textit{Коэффициент корреляции} $\rho$ случайных величин $X,Y$:
+\textit{Коэффициент корреляции} $\rho_{XY}$ случайных величин $X,Y$:
 \begin{equation}
-    \rho=\frac{K}{\sigma_x\sigma_y}.
+    \rho_{XY}^{}=\frac{K_{XY}}{\sigma_x\sigma_y}.
+\end{equation}
+\textit{Ковариационной матрицей} случайного вектора $(X,Y)$ называется симметричная матрица вида
+\begin{equation}
+    K=\begin{pmatrix}
+    D_X & K_{XY} \\
+    K_{YX} & D_Y
+    \end{pmatrix}.
+\end{equation}
+\textit{Кореляционной матрицей} случайного вектора $(X,Y)$ называется нормированная ковариационная матрица вида
+\begin{equation}
+    R=\begin{pmatrix}
+    1 & \rho_{XY}^{} \\
+    \rho_{YX}^{} & 1
+    \end{pmatrix}.
 \end{equation}
 \subsection{Выборочные коэффициенты корреляции}
 \subsubsection{Выборочный коэффициент корреляции Пирсона}
 \textit{Выборочный коэффициент корреляции Пирсона}:
 \begin{equation}
-    r=\frac{\frac{1}{n}\sum_{i=1}^n \left(x_i-\overline{x}\right)\left(y_i-\overline{y}\right)}{\sqrt{\frac{1}{n}\sum_{i=1}^n\left(x_i-\overline{x}\right)^2 \frac{1}{n}\sum_{i=1}^n\left(y_i-\overline{y}\right)^2}}=\frac{K}{s_X s_Y},
+    r=\frac{\frac{1}{n}\sum_{i=1}^n \left(x_i-\overline{x}\right)\left(y_i-\overline{y}\right)}{\sqrt{\frac{1}{n}\sum_{i=1}^n\left(x_i-\overline{x}\right)^2 \frac{1}{n}\sum_{i=1}^n\left(y_i-\overline{y}\right)^2}}=\frac{K_{XY}}{s_X s_Y},
 \end{equation}
 где $K,\,s_X^2,\,s_Y^2\:-$ выборочные ковариация и дисперсии случайных величин $X, Y$.
 \subsubsection{Выборочный квадрантный коэффициент корреляции}
@@ -63,12 +77,106 @@
 \subsection{Эллипсы рассеивания}
 Уравнение проекции эллипса рассеивания на плоскость $xOy$:
 \begin{equation}\label{eq:ellipse}
-    \frac{\left(x-\overline{x}\right)^2}{\sigma_x^2}-2\rho\frac{(x-\overline{x})(y-\overline{y})}{\sigma_x\sigma_y}+\frac{\left(y-\overline{y}\right)^2}{\sigma_y^2}=C,\;\;C\,-\,\text{const}.
+    \frac{\left(x-\overline{x}\right)^2}{\sigma_x^2}-2\rho_{XY}^{}\frac{(x-\overline{x})(y-\overline{y})}{\sigma_x\sigma_y}+\frac{\left(y-\overline{y}\right)^2}{\sigma_y^2}=C,\;\;C\,-\,\text{const}.
 \end{equation}
 Центр эллипса \eqref{eq:ellipse} находится в точке с координатами $(\overline{x},\overline{y})$, оси симметрии эллипса составляют с осью $Ox$ углы, определяемые уравнением
 \begin{equation}
-    \tan{2\alpha}=\frac{2\rho\sigma_x\sigma_y}{\sigma_x^2-\sigma_y^2}.
+    \tan{2\alpha}=\frac{2\rho_{XY}^{}\sigma_x\sigma_y}{\sigma_x^2-\sigma_y^2}.
 \end{equation}
+\subsection{Простая линейная регрессия}
+\subsubsection{Модель простой линейной регрессии}
+Регрессионую модель описания данных называют \textit{простой линейной регрессией}, если
+\begin{equation}
+    y_i=\beta_0 + \beta_1 x_i + \varepsilon_i,\;\;i=1,...,n,
+\end{equation}
+где $x_1, ..., x_n\:-$ заданные числа (значения фактора); $y_1,...,y_n\:-$ наблюдаемые значения отклика; $\varepsilon_1,...,\varepsilon_n\:-$ независимые, нормально распределенные $N(0,\sigma)$ с нулевым математическим ожиданием и одинаковой (неизвестной) дисперсией случайные величины (ненаблюдаемые); $\beta_0,\:\beta_1\:-$ неизвестные параметры, подлежащие оцениванию.
+\subsubsection{Метод наименьших квадратов}
+\textit{Метод наименьших квадратов} (МНК):
+\begin{equation}
+    Q\left(\beta_0,\beta_1\right)=\sum_{i=1}^n \varepsilon_i^2= \sum_{i=1}^n\left(y_i-\beta_0-\beta_1 x_i\right)^2\to\min_{\beta_0,\beta_1}.
+\end{equation}
+\subsubsection{Расчётные формулы для МНК-оценок}
+МНК-оценки параметров $\beta_0$ и $\beta_1$:
+\begin{equation}
+    \widehat{\beta}_1=\frac{\overline{xy}-\overline{x}\cdot\overline{y}}{\overline{x^2}-(\overline{x})^2},
+\end{equation}
+\begin{equation}
+    \widehat{\beta}_0=\overline{y}-\overline{x}\widehat{\beta}_1.
+\end{equation}
+\subsection{Робастные оценки коэффициентов линейной регрессии}
+\textit{Метод наименьших модулей}:
+\begin{equation}
+    \sum_{i=1}^n |y_i-\beta_0-\beta_1 x_i|\to \min_{\beta_0,\beta_1}.
+\end{equation}
+\begin{equation}
+    \widehat{\beta}_{1R}=r_Q\frac{q_y^*}{q_x^*},
+\end{equation}
+\begin{equation}
+    \widehat{\beta}_{0R}=\med{y}-\widehat{\beta}_{1R}\med{x},
+\end{equation}
+\begin{equation}
+    r_Q=\frac{1}{n}\sum_{i=1}^n \sign{(x_i-\med{x})}\sign{(y_i-\med{y})},
+\end{equation}
+\begin{equation}
+    q_y^*=\frac{y_{(j)}-y_{(l)}}{k_q(n)},\;\;q_x^*=\frac{x_{(j)}-x_{(l)}}{k_q(n)}
+\end{equation}
+\begin{equation*}
+    l=\begin{cases}
+        \displaystyle\;\;[n/4]+1&\text{при}\;\;n/4\;\;\text{дробном,}\\
+        \displaystyle\;\;\;\;\;\;\;n/4&\text{при}\;\;n/4\;\;\text{целом}.
+    \end{cases}
+\end{equation*}
+\begin{equation*}
+    j=n-l+1.
+\end{equation*}
+\begin{equation*}
+    \sign{z} = \begin{cases}
+    \;\:\:1&\text{при}\;\;z>0,\\
+    \;\:\:0&\text{при}\;\;z=0,\\
+    -1&\text{при}\;\;z<0.
+    \end{cases}
+\end{equation*}
+Уравнение регрессии здесь имеет вид
+\begin{equation}
+    y = \widehat{\beta}_{0R}+\widehat{\beta}_{1R}\cdot x.
+\end{equation}
+\begin{equation*}
+    k_q(20)=1.491.
+\end{equation*}
+\subsection{Метод максимального правдоподобия}
+$L(x_1,...,x_n,\theta)\;-$ функция правдоподобия(ФП), рассматриваемая как функция неизвестного параметра $\theta$:
+\begin{equation}
+    L(x_1,...,x_n,\theta)=f(x_1,\theta)f(x_2,\theta)...f(x_n,\theta).
+\end{equation}
+\textit{Оценка максимального правдоподобия}:
+\begin{equation}
+    \widehat{\theta}_{\text{мп}}=\arg{\max_\theta{L(x_1,...,x_n,\theta)}}.
+\end{equation}
+Система уравнений правдоподобия (в случае дифференцируемости функции правдоподобия):
+\begin{equation}
+    \frac{\partial L}{\partial\theta_k}=0\;\;\text{или}\;\;\frac{\partial\ln{L}}{\partial\theta_k}=0,\;\;k=1,...,m.
+\end{equation}
+\subsection{Проверка гипотезы о законе распределения генеральной совокупности. Метод хи-квадрат}
+Выдвинута гипотеза $H_0$ о генеральном законе распределения с функцией
+распределения $F(x)$.\\\\
+Рассматриваем случай, когда гипотетическая функция распределения $F(x)$ не содержит неизвестных параметров.
+\subsubsection*{Правило проверки гипотезы о законе распределения по методу $\chi^2$}
+\begin{enumerate}
+    \item Выбираем уровень значимости $\alpha$.
+    \item По таблице \cite[с. 358]{book1} находим квантиль $\chi_{1-\alpha}^2(k-1)$ распределения хи-квадрат с $k-1$ степенями свободы порядка $1-\alpha$.
+    \item Вычисляем вероятности $p_i=P(X\in\Delta_i), i = 1,...,k$, с помощью гипотетической функции распределения $F(x)$.
+    \item Находим частоты $n_i$ попадания элементов выборки в подмножества $\Delta_i,i=1,...,k$.
+    \item Вычисляем выборочное значение статистики критерия $\chi^2$:
+        \begin{equation*}
+            \chi^2_{\text{В}}=\sum_{i=1}^k\frac{(n_i-np_i)^2}{np_i}.
+        \end{equation*}
+    \item Сравниваем $\chi^2_{\text{В}}$ и квантиль $\chi_{1-\alpha}^2(k-1)$.
+        \begin{enumerate}
+            \item Если $\chi^2_{\text{В}}<\chi_{1-\alpha}^2(k-1)$, то гипотеза $H_0$ на данном этапе проверки принимается.
+            \item Если $\chi^2_{\text{В}}\geq\chi_{1-\alpha}^2(k-1)$, то гипотеза $H_0$ отвергается, выбирается одно из альтернативных распределений, и процедура проверки повторяется.
+
+        \end{enumerate}
+\end{enumerate}
 \section{Реализация}
 Лабораторная работа выполнена на языках Python и R в средах PyCharm, Jupyter Notebook, R Studio с использованием следующих библиотек:
 \begin{itemize}
@@ -88,4 +196,10 @@
 \section{Результаты}
 \section{Обсуждение}
 \section*{Примечание}
+\begin{thebibliography}{9}
+\bibitem{book1} 
+ Максимов Ю.Д. Математика. Теория и практика по математической статистике. Конспект-справочник по теории вероятностей : учеб. пособие /
+Ю.Д. Максимов; под ред. В.И. Антонова. $-$ СПб. : Изд-во Политехн.
+ун-та, 2009. $-$ 395 с. (Математика в политехническом университете).
+\end{thebibliography}
 \end{document}
