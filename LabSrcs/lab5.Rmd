@@ -1,0 +1,156 @@
+---
+title: "Presentation"
+output:
+  pdf_document:
+    extra_dependencies:
+      babel : ["english", "russian"]
+    keep_tex: true
+    latex_engine: xelatex
+---
+
+```{r include=FALSE}
+library(kableExtra)
+library(kmlShape)
+library(rmutil)
+library(MASS)
+```
+
+Quadrant count ratio (QCR):
+```{r}
+qcr <- function(X, Y) {
+  r_Q <- 0
+  med_x <- median(X)
+  med_y <- median(Y)
+  for (i in 1:length(X)) {
+   r_Q <- r_Q + sign(X[[i]] - med_x) * sign(Y[[i]] - med_y)
+  }
+  r_Q <- r_Q / length(X)
+}
+```
+
+
+
+```{r}
+rho <- 0.5
+K <- matrix(c(1,rho,rho,1), nrow = 2, ncol = 2)
+mu <- c(X = 0, Y = 0)
+dta = mvrnorm(n = 1000, mu = mu, Sigma = K)
+plot(dta)
+```
+
+```{r}
+rho <- c(0, 0.5, 0.9)
+sample_size <- c(20, 60, 100)
+number_of_tests <- 1000
+for (size in sample_size) {
+  pearson_res <- list()
+  spearman_res <- list()
+  rcq_res <- list()
+  for (i in 1:number_of_tests) {
+    
+  }
+}
+#for 
+```
+
+```{r}
+rows_name <- c("$E(z)$","$E(z^2)$", "$D(z)$")
+number_of_tests <- 1000
+#rhos <- c(0,0.5,0.9)
+rhos <- c(0)
+sample_size = c(20)
+mu <- c(X = 0, Y = 0)
+#sample_size <- c(20, 60, 100)
+for (size in sample_size) {
+  for (rho in rhos) {
+    K <- matrix(c(1, rho, rho, 1), nrow = 2, ncol = 2)
+    pearson_res_mixt = list()
+    spearman_res_mixt = list()
+    qcr_res_mixt = list()
+    for (i in 1:number_of_tests) {
+      dta <- mvrnorm(n = size, mu = mu, Sigma = K)
+      pearson_res_mixt[i] <- cor(dta[1:size], dta[(size + 1):(2 * size)], 
+                               method = "pearson")
+      spearman_res_mixt[i] <- cor(dta[1:size], dta[(size + 1):(2 * size)],
+                                method = "spearman")
+      qcr_res_mixt[i] <- qcr(dta[1:size], dta[(size + 1):(2 * size)])
+    }
+    pearson_res_mixt <- unlist(pearson_res_mixt)
+    spearman_res_mixt <- unlist(spearman_res_mixt)
+    qcr_res_mixt <- unlist(qcr_res_mixt)
+    Ez <- c(mean(pearson_res_mixt), mean(spearman_res_mixt), mean(qcr_res_mixt))
+    Dz <- c(var(pearson_res_mixt), var(spearman_res_mixt), var(qcr_res_mixt))
+    Ez2 <- Dz + Ez ^ 2
+    Ez <- round(Ez, digits = 3)
+    Ez2 <- round(Ez2, digits = 3)
+    Dz <- round(Dz, digits = 3)
+    r <- c(Ez[1], Ez2[1], Dz[1])
+    r_s <- c(Ez[2], Ez2[2], Dz[2])
+    r_Q <- c(Ez[3], Ez2[3], Dz[3])
+    if (rho == 0 & size == 20) {
+      Ez <- append(as.list(Ez), rows_name[1], after = 0)
+      Ez2 <- append(as.list(Ez2), rows_name[2], after = 0)
+      Dz <- append(as.list(Dz), rows_name[3], after = 0)
+      Ez[[4]]= paste(toString(Ez[[3]]), r"(\\\hline )", sep = "")
+      Ez2[[4]]= paste(toString(Ez2[[3]]), r"(\\\hline )", sep = "")
+      Dz[[4]]= paste(toString(Dz[[3]]), r"(\\\hline )", sep = "")
+      first_line <- c(r"($\rho = 0$)", r"($r$\eqref{eq::pirs})", r"($r_s$\eqref{eq::pirs})", r"($r_Q$\eqref{eq::rQ}\\\hline )")
+      content <- rbind(first_line, Ez, Ez2, Dz)
+      write.table(content, file = "resources\\20rho0.tex", sep = "&", col.names = F, row.names = F)
+    }
+    else {
+      content <- data.frame(rows_name, r, r_s, r_Q)
+      col_names <- c(paste(r"($\rho$ =)", toString(rho)), "$r$", "$r_S$", "$r_Q$")
+      file_name <- paste("resources\\", toString(size), "rho", toString(rho),".pdf", sep = "")
+      knitr::kable(content, format = "latex", col.names = col_names, align = c("l","c","c","c"), escape = F) %>%
+    column_spec(1, border_left = T) %>% column_spec(4, border_right = T) %>%   save_kable(file_name)
+    }
+  }
+}
+```
+
+```{r}
+rows_name <- c("$E(z)$","$E(z^2)$", "$D(z)$")
+number_of_tests <- 1000
+probs <- c(0.9,0.1)
+sample_size <- c(20, 60, 100)
+for (size in sample_size) {
+  pearson_res_mixt = list()
+  spearman_res_mixt = list()
+  qcr_res_mixt = list()
+  K1 <- matrix(c(1,0.9,0.9,1), nrow = 2, ncol = 2)
+  mu <- c(X = 0, Y = 0)
+  K2 <- matrix(c(100,-90,-90,100), nrow = 2, ncol = 2)
+  for (i in 1:number_of_tests) {
+    n1 <- rbinom(1, size = size, prob = probs[1])
+    n2 <- size - n1
+    dta1 <- if (n1 == 0) NULL else mvrnorm(n = n1, mu = mu, Sigma = K1)
+    dta2 <- if (n2 == 0) NULL else mvrnorm(n = n2, mu = mu, Sigma = K2)
+    dta <- rbind(dta1, dta2)
+    pearson_res_mixt[i] <- cor(dta[1:size], dta[(size + 1):(2 * size)], 
+                               method = "pearson")
+    spearman_res_mixt[i] <- cor(dta[1:size], dta[(size + 1):(2 * size)],
+                                method = "spearman")
+    qcr_res_mixt[i] <- qcr(dta[1:size], dta[(size + 1):(2 * size)])
+  }
+  pearson_res_mixt <- unlist(pearson_res_mixt)
+  spearman_res_mixt <- unlist(spearman_res_mixt)
+  qcr_res_mixt <- unlist(qcr_res_mixt)
+  Ez <- c(mean(pearson_res_mixt), mean(spearman_res_mixt), mean(qcr_res_mixt))
+  Dz <- c(var(pearson_res_mixt), var(spearman_res_mixt), var(qcr_res_mixt))
+  Ez2 <- Dz + Ez ^ 2
+  Ez <- round(Ez, digits = 3)
+  Ez2 <- round(Ez2, digits = 3)
+  Dz <- round(Dz, digits = 3)
+  r <- c(Ez[1], Ez2[1], Dz[1])
+  r_s <- c(Ez[2], Ez2[2], Dz[2])
+  r_Q <- c(Ez[3], Ez2[3], Dz[3])
+  content <- data.frame(rows_name, r, r_s, r_Q)
+  col_names <- c(paste("$n$ =", toString(size)), "$r$", "$r_S$", "$r_Q$")
+  file_name <- paste("resources\\", "mixedDistr",toString(size), ".pdf", sep = "")
+  knitr::kable(content, format = "latex", col.names = col_names, align = c("l","c","c","c"), escape = F) %>%
+    column_spec(1, border_left = T) %>% column_spec(4, border_right = T) %>% save_kable(file_name)
+}
+```
+
+
