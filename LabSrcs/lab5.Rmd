@@ -56,11 +56,9 @@ for (size in sample_size) {
 ```{r}
 rows_name <- c("$E(z)$","$E(z^2)$", "$D(z)$")
 number_of_tests <- 1000
-#rhos <- c(0,0.5,0.9)
-rhos <- c(0)
-sample_size = c(20)
+rhos <- c(0,0.5,0.9)
 mu <- c(X = 0, Y = 0)
-#sample_size <- c(20, 60, 100)
+sample_size <- c(20, 60, 100)
 for (size in sample_size) {
   for (rho in rhos) {
     K <- matrix(c(1, rho, rho, 1), nrow = 2, ncol = 2)
@@ -94,7 +92,7 @@ for (size in sample_size) {
       Ez[[4]]= paste(toString(Ez[[3]]), r"(\\\hline )", sep = "")
       Ez2[[4]]= paste(toString(Ez2[[3]]), r"(\\\hline )", sep = "")
       Dz[[4]]= paste(toString(Dz[[3]]), r"(\\\hline )", sep = "")
-      first_line <- c(r"($\rho = 0$)", r"($r$\eqref{eq::pirs})", r"($r_s$\eqref{eq::pirs})", r"($r_Q$\eqref{eq::rQ}\\\hline )")
+      first_line <- c(r"($\rho = 0.0$)", r"($r$\eqref{eq::pirs})", r"($r_s$\eqref{eq::spir})", r"($r_Q$\eqref{eq::rQ}\\\hline )")
       content <- rbind(first_line, Ez, Ez2, Dz)
       write.table(content, file = "resources\\20rho0.tex", sep = "&", col.names = F, row.names = F)
     }
