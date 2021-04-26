@@ -37,7 +37,7 @@
     K_{XY} = \cov{(X,Y)}=\mathbf{M}\left[(X-\overline{x})(Y-\overline{y})\right].
 \end{equation}
 \textit{Коэффициент корреляции} $\rho_{XY}$ случайных величин $X,Y$:
-\begin{equation}
+\begin{equation}\label{eq::rho}
     \rho_{XY}^{}=\frac{K_{XY}}{\sigma_x\sigma_y}.
 \end{equation}
 \textit{Ковариационной матрицей} случайного вектора $(X,Y)$ называется симметричная матрица вида
@@ -57,12 +57,12 @@
 \subsection{Выборочные коэффициенты корреляции}
 \subsubsection{Выборочный коэффициент корреляции Пирсона}
 \textit{Выборочный коэффициент корреляции Пирсона}:
-\begin{equation}
+\begin{equation}\label{eq::pirs}
     r=\frac{\frac{1}{n}\sum_{i=1}^n \left(x_i-\overline{x}\right)\left(y_i-\overline{y}\right)}{\sqrt{\frac{1}{n}\sum_{i=1}^n\left(x_i-\overline{x}\right)^2 \frac{1}{n}\sum_{i=1}^n\left(y_i-\overline{y}\right)^2}}=\frac{K_{XY}}{s_X s_Y},
 \end{equation}
 где $K,\,s_X^2,\,s_Y^2\:-$ выборочные ковариация и дисперсии случайных величин $X, Y$.
 \subsubsection{Выборочный квадрантный коэффициент корреляции}
-\begin{equation}
+\begin{equation}\label{eq::rQ}
     r_Q=\frac{(n_1+n_3)-(n_2+n_4)}{n},
 \end{equation}
 где $n_1,n_2,n_3,n_4\:-$ количества точек с координатами $(x_i,y_i)$, попавшими соответственно в I, II, III и IV квадранты декартовой системы с осями $x^'=x-\med{x},\,y^'=y-\med{y}$ и с центром в точке с координатами $(\med{x},\med{y})$.
@@ -70,7 +70,7 @@
 Обозначим ранги, соотвествующие значениям переменной $X$, через $u$, а ранги, соответствующие значениям переменной $Y$, $-$ через $v$.
 \\\\
 \textit{Выборочный коэффициент ранговой корреляции Спирмена}:
-\begin{equation}
+\begin{equation}\label{eq::sp}
     r_S=\frac{\frac{1}{n}\sum_{i=1}^n \left(u_i-\overline{u}\right)\left(v_i-\overline{v}\right)}{\sqrt{\frac{1}{n}\sum_{i=1}^n\left(u_i-\overline{u}\right)^2 \frac{1}{n}\sum_{i=1}^n\left(v_i-\overline{v}\right)^2}},
 \end{equation}
 где $\overline{u}=\overline{v}=\frac{1+2+...+n}{n}=\frac{n+1}{2}\,-$ среднее значение рангов.
