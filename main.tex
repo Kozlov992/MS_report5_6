@@ -189,8 +189,10 @@ $L(x_1,...,x_n,\theta)\;-$ функция правдоподобия(ФП), ра
     \end{enumerate}
     \item R:
     \begin{enumerate}
-        \item kmlShape (нахождение дискретного расстояния Фреше)
+        \item MASS (генерация выборок)
         \item kableExtra (оформление)
+        \item ggplot2, cowplot (визуализация данных)
+        
 \end{enumerate}
 \end{itemize}
 \section{Результаты}
@@ -207,7 +209,7 @@ $L(x_1,...,x_n,\theta)\;-$ функция правдоподобия(ФП), ра
         \includegraphics{LabSrcs/resources/20rho0.9.pdf}
     \end{center}
     \caption{Двумерное нормальное распределение, $n=20$}
-    \label{tab:my_label}
+    \label{tab:norm20}
 \end{table}
 \begin{table}[H]
     \begin{center}
@@ -220,7 +222,7 @@ $L(x_1,...,x_n,\theta)\;-$ функция правдоподобия(ФП), ра
     \includegraphics[]{LabSrcs/resources/60rho0.9.pdf}
     \end{center}
     \caption{Двумерное нормальное распределение, $n=60$}
-    \label{tab:my_label}
+    \label{tab:norm60}
 \end{table}
 \begin{table}[H]
     \begin{center}
@@ -233,7 +235,20 @@ $L(x_1,...,x_n,\theta)\;-$ функция правдоподобия(ФП), ра
     \includegraphics[]{LabSrcs/resources/100rho0.9.pdf}
     \end{center}
     \caption{Двумерное нормальное распределение, $n=100$}
-    \label{tab:my_label}
+    \label{tab:norm100}
+\end{table}
+\begin{table}[H]
+    \begin{center}
+    \includegraphics[]{LabSrcs/resources/mixedDistr20.pdf}
+    \end{center}
+    \begin{center}
+    \includegraphics[]{LabSrcs/resources/mixedDistr60.pdf}
+    \end{center}
+    \begin{center}
+    \includegraphics[]{LabSrcs/resources/mixedDistr100.pdf}
+    \end{center}
+    \caption{Смесь нормальных распределений}
+    \label{tab:mixture}
 \end{table}
 \section{Обсуждение}
 \section*{Примечание}
