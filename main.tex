@@ -22,6 +22,7 @@
     \end{equation*}
     Изобразить сгенерированные точки на плоскости и нарисовать эллипс
     равновероятности.
+    \item Найти оценки коэффициентов линейной регрессии $y_i=a+b x_i + e_i$, используя 20 точек на отрезке $[-1.8,2]$ с равномерным шагом, равным $0.2$. Ошибку $e_i$ считать нормально распределенной с параметрами $(0,1)$. В качестве эталонной зависимости взять $y_i=2+2x_i+e_i$. При построении оценок использовать 2 критерия: критерий наименьших квадратов и критерий наименьших модулей. Проделать то же самое для выборки, у которой в значения $y_1$ и $y_{20}$ вносятся возмущения $10$ и $-10$.
 \end{enumerate}
 \section{Теория}
 \subsection{Двумерное нормальное распределение}
@@ -252,12 +253,32 @@ $L(x_1,...,x_n,\theta)\;-$ функция правдоподобия(ФП), ра
     \label{tab:mixture}
 \end{table}
 \subsection{Эллипсы рассеивания}
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includegraphics[width = \textwidth]{LabSrcs/resources/ellipse20.pdf}
-    \caption{Caption}
-    \label{fig:my_label}
+    \includegraphics[width = \textwidth, height = 7 cm]{LabSrcs/resources/ellipse20.pdf}
+    \caption{Двумерное нормальное распределение, $n=20$}
+    \label{fig:el20}
 \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = \textwidth, height = 7 cm]{LabSrcs/resources/ellipse60.pdf}
+    \caption{Двумерное нормальное распределение, $n=60$}
+    \label{fig:el60}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = \textwidth, height = 7 cm]{LabSrcs/resources/ellipse100.pdf}
+    \caption{Двумерное нормальное распределение, $n=100$}
+    \label{fig:el100}
+\end{figure}
+\subsection{Оценки коэффициентов линейной регрессии}
+\subsubsection{Выборка без возмущения}
+\begin{itemize}
+    \item Критерий наименьших квадратов:
+    \[
+    \input{}
+    \]
+\end{itemize}
 \section{Обсуждение}
 \section*{Примечание}
 \begin{thebibliography}{9}
