@@ -10,13 +10,15 @@ output:
 
 ```{r include=FALSE}
 library(kableExtra)
-library(kmlShape)
 library(rmutil)
 library(MASS)
+library(ggplot2)
+library(latex2exp)
+library(cowplot)
 ```
 
 Quadrant count ratio (QCR):
-```{r}
+```{r tidy = TRUE}
 qcr <- function(X, Y) {
   r_Q <- 0
   med_x <- median(X)
@@ -30,35 +32,32 @@ qcr <- function(X, Y) {
 
 
 
-```{r}
-rho <- 0.5
-K <- matrix(c(1,rho,rho,1), nrow = 2, ncol = 2)
+```{r tidy = TRUE}
 mu <- c(X = 0, Y = 0)
-dta = mvrnorm(n = 1000, mu = mu, Sigma = K)
-plot(dta)
-```
-
-```{r}
-rho <- c(0, 0.5, 0.9)
+rhos <- c(0,0.5,0.9)
 sample_size <- c(20, 60, 100)
-number_of_tests <- 1000
 for (size in sample_size) {
-  pearson_res <- list()
-  spearman_res <- list()
-  rcq_res <- list()
-  for (i in 1:number_of_tests) {
-    
+  p <- vector("list", length = length(sample_size))
+  for (i in 1:length(rhos)) {
+    K <- matrix(c(1, rhos[i], rhos[i], 1), nrow = 2, ncol = 2)
+    dta <- mvrnorm(n = size, mu = mu, Sigma = K)
+    cap <- paste("$\\rho =", toString(rhos[i]))
+    p[[i]] <- ggplot(data.frame(dta), mapping = aes(x = X, y = Y))+ geom_point(color = "red") + stat_ellipse(color = "darkblue", size = 1.05) + labs(caption = TeX(cap)) + theme(plot.caption = element_text(hjust = 0.5, size = 12))
   }
+  name <- paste("resources\\ellipse", toString(size), ".pdf", sep = "")
+  ggsave(name, plot_grid(plotlist = p, nrow = 1, ncol = 3), device = "pdf", width = 15)
 }
-#for 
 ```
 
-```{r}
+
+```{r tidy = TRUE}
 rows_name <- c("$E(z)$","$E(z^2)$", "$D(z)$")
 number_of_tests <- 1000
 rhos <- c(0,0.5,0.9)
+#rhos <- c(0)
 mu <- c(X = 0, Y = 0)
 sample_size <- c(20, 60, 100)
+#sample_size <- c(20)
 for (size in sample_size) {
   for (rho in rhos) {
     K <- matrix(c(1, rho, rho, 1), nrow = 2, ncol = 2)
@@ -81,7 +80,7 @@ for (size in sample_size) {
     Ez2 <- Dz + Ez ^ 2
     Ez <- round(Ez, digits = 3)
     Ez2 <- round(Ez2, digits = 3)
-    Dz <- round(Dz, digits = 3)
+    Dz <- round(Dz, digits = if (rho == 0.9 & size == 100) 4 else 3)
     r <- c(Ez[1], Ez2[1], Dz[1])
     r_s <- c(Ez[2], Ez2[2], Dz[2])
     r_Q <- c(Ez[3], Ez2[3], Dz[3])
@@ -107,7 +106,7 @@ for (size in sample_size) {
 }
 ```
 
-```{r}
+```{r tidy = TRUE}
 rows_name <- c("$E(z)$","$E(z^2)$", "$D(z)$")
 number_of_tests <- 1000
 probs <- c(0.9,0.1)
