@@ -42,7 +42,7 @@ for (size in sample_size) {
     K <- matrix(c(1, rhos[i], rhos[i], 1), nrow = 2, ncol = 2)
     dta <- mvrnorm(n = size, mu = mu, Sigma = K)
     cap <- paste("$\\rho =", toString(rhos[i]))
-    p[[i]] <- ggplot(data.frame(dta), mapping = aes(x = X, y = Y))+ geom_point(color = "red") + stat_ellipse(color = "darkblue", size = 1.05) + labs(caption = TeX(cap)) + theme(plot.caption = element_text(hjust = 0.5, size = 12))
+    p[[i]] <- ggplot(data.frame(dta), mapping = aes(x = X, y = Y))+ geom_point(color = "red") + stat_ellipse(color = "darkblue", size = 1.05) + labs(caption = TeX(cap)) + theme(plot.caption = element_text(hjust = 0.5, size = 20))
   }
   name <- paste("resources\\ellipse", toString(size), ".pdf", sep = "")
   ggsave(name, plot_grid(plotlist = p, nrow = 1, ncol = 3), device = "pdf", width = 15)
