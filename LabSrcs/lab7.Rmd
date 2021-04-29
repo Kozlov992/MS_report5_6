@@ -1,0 +1,76 @@
+---
+title: "Presentation"
+output:
+  pdf_document:
+    extra_dependencies:
+      babel : ["english", "russian"]
+    keep_tex: true
+    latex_engine: xelatex
+---
+
+```{r include=FALSE}
+library(kableExtra)
+library(rmutil)
+library(MASS)
+library(ggplot2)
+library(latex2exp)
+library(cowplot)
+```
+
+```{r tidy = TRUE}
+k <- 8
+lb <- -3
+rb <- 3
+size <- 100
+x <- c(-Inf, seq(lb, rb, (rb - lb) / (k - 2)), Inf)
+sample <- rnorm(size)
+n <- vector(mode = "numeric", length = k)
+p <- vector(mode = "numeric", length = k)
+intervals <- vector(mode = "character", length = k)
+for (i in 1:k) {
+  p[i] <- pnorm(x[i + 1]) - pnorm(x[i])
+  for (element in sample) {
+    if (x[i] <= element & element < x[i + 1])
+      n[i] <- n[i] + 1
+  }
+  if (i == 1) {
+    intervals[i] <- paste("(-\\infty,",toString(x[i + 1]), ")", sep = "")
+  }
+  else if (i == k) {
+    intervals[i] <- paste("[", toString(x[i]), ",+\\infty)", sep = "")
+  }
+  else {
+    intervals[i] <- paste("[", toString(x[i]), ",", toString(x[i + 1]), ")", sep = "")
+  }
+}
+np <- size * p
+n_np <- n - np
+chi_comp <- n_np ^ 2 / np
+n <- c(n, sum(n))
+p <- c(p, sum(p))
+np <- c(np, sum(np))
+n_np <- c(n_np, sum(n_np))
+chi_sample <- sum(chi_comp)
+chi_comp <- c(chi_comp, chi_sample)
+interval_num <- as.character(1:k)
+interval_num <- c(interval_num, "\\Sigma")
+intervals <- c(intervals, "$-$")
+p <- round(p, digits = 4)
+np <-round(np, digits = 2)
+n_np <- round(n_np, digits = 2)
+chi_comp <- round(chi_comp, digits = 2)
+content <- data.frame(interval_num, intervals, n, p, np, n_np, chi_comp)
+col_names <- c("$i$", "$\\Delta_i$", "$n_i$", "$p_i$", "$np_i$", "$n_i-np_i$", "$\\dfrac{(n_i-np_i)^2}{np_i}$")
+file_name <- "resources\\chi2test.pdf"
+knitr::kable(content, format = "latex", col.names = col_names, align = rep("c", length(col_names)), escape = F) %>%
+    column_spec(1, border_left = T) %>% column_spec(length(col_names), border_right = T) %>%   save_kable(file_name)
+file_handler <- file("resources\\chiComparison.tex", open = "wt", encoding = "UTF-8")
+chi8 <- 14.1
+if (chi_sample < chi8) {
+  writeLines(paste(toString(round(chi_sample, digits = 2)), "=\\chi_{\\text{В}}^2<\\chi_{0.95}^2(7)\\Longrightarrow\\;\\text{H_0 принимается}", sep = ""), file_handler)
+} else {
+  writeLines(paste(toString(round(chi_sample, digits = 2)), "=\\chi_{\\text{В}}^2\\not<\\chi_{0.95}^2(7)\\Longrightarrow\\;\\text{H_0 на данном этапе не принимается}", sep = ""), file_handler)
+}
+close(file_handler)
+```
+
