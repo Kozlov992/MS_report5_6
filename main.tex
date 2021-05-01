@@ -309,10 +309,36 @@
 \end{equation*}
 \subsection*{Исследование на чувствительность}
 \begin{enumerate}
-    \item Рассмотрим гипотезу $H_0$, что выборка подчиняется распределению Лапласа $L(0,\frac{1}{\sqrt{2}})$. Используем критерий согласия $\chi^2$:
+    \item Рассмотрим гипотезу $H_0$ о нормальности выборки, сгенерированной согласно распределению Лапласа $L(0,\frac{1}{\sqrt{2}})$. Используем критерий согласия $\chi^2$:
     \begin{itemize}
-        \item 
-    \end{itemize}
+    \item Количество промежутков $k=1.72\sqrt[3]{20}\approx5$,
+    \item Уровень значимости $\alpha=0.05$,
+    \item Квантиль из таблицы $\chi^2_{0.95}(4)\approx 9.5$.
+\end{itemize}
+\begin{table}[H]
+    \centering
+    \includegraphics[]{LabSrcs/resources/chi2testLaplace.pdf}
+    \caption{тест на нормальность выборки по Лапласу.}
+    \label{tab:chi2lapl}
+\end{table}
+\begin{equation*}
+    \input{LabSrcs/resources/chiComparisonLaplace}.
+\end{equation*}
+\item Рассмотрим гипотезу $H_0$ о нормальности выборки, сгенерированной согласно равномерному распределению $U(-1.5,1.5)$. Используем критерий согласия $\chi^2$:
+    \begin{itemize}
+    \item Количество промежутков $k=1.72\sqrt[3]{20}\approx5$,
+    \item Уровень значимости $\alpha=0.05$,
+    \item Квантиль из таблицы $\chi^2_{0.95}(4)\approx 9.5$.
+\end{itemize}
+\begin{table}[H]
+    \centering
+    \includegraphics[]{LabSrcs/resources/chi2testUnif.pdf}
+    \caption{Тест на нормальность выборки, подчиняющейся равномерному распределению.}
+    \label{tab:chi2unif}
+\end{table}
+\begin{equation*}
+    \input{LabSrcs/resources/chiComparisonUnif}.
+\end{equation*}
 \end{enumerate}
 \section{Обсуждение}
 \section*{Примечание}
