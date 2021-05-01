@@ -1,0 +1,262 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Presentation},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage[english, russian]{babel}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Presentation}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dta }\OtherTok{\textless{}{-}} \FunctionTok{scan}\NormalTok{(}\StringTok{"resources}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{wave\_ampl.txt"}\NormalTok{, }\AttributeTok{sep =} \StringTok{","}\NormalTok{)}
+\NormalTok{cluster }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(dta, }\FunctionTok{ceiling}\NormalTok{(}\FunctionTok{seq\_along}\NormalTok{(dta)}\SpecialCharTok{/}\DecValTok{1024}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{preffered\_cluster }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(cluster[}\DecValTok{75}\NormalTok{])}
+\NormalTok{filtered\_cluster }\OtherTok{\textless{}{-}} \FunctionTok{runmed}\NormalTok{(preffered\_cluster, }\AttributeTok{k =} \DecValTok{3}\NormalTok{)}
+\NormalTok{k }\OtherTok{\textless{}{-}} \DecValTok{30}
+\NormalTok{breaks }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{min}\NormalTok{(filtered\_cluster), }\FunctionTok{max}\NormalTok{(filtered\_cluster), }\AttributeTok{l =}\NormalTok{ k }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}
+\NormalTok{h }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(filtered\_cluster, }\AttributeTok{breaks =}\NormalTok{ breaks, }\AttributeTok{plot =}\NormalTok{ F)}
+\NormalTok{max\_ind }\OtherTok{\textless{}{-}} \FunctionTok{which.max}\NormalTok{(h}\SpecialCharTok{$}\NormalTok{counts)}
+\NormalTok{second\_max\_ind }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(h}\SpecialCharTok{$}\NormalTok{counts }\SpecialCharTok{==} \FunctionTok{max}\NormalTok{(h}\SpecialCharTok{$}\NormalTok{counts[}\SpecialCharTok{{-}}\NormalTok{max\_ind]))}
+\NormalTok{point\_type }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"character"}\NormalTok{, }\AttributeTok{length =} \DecValTok{1024}\NormalTok{)}
+\NormalTok{first\_noise\_band }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{()}
+\NormalTok{second\_noise\_band }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{()}
+\NormalTok{signal }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{()}
+\NormalTok{first\_conversion }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{()}
+\NormalTok{second\_conversion }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1024}\NormalTok{) \{}
+    \ControlFlowTok{if}\NormalTok{ (breaks[max\_ind] }\SpecialCharTok{\textless{}=}\NormalTok{ filtered\_cluster[i] }\SpecialCharTok{\&}\NormalTok{ filtered\_cluster[i] }\SpecialCharTok{\textless{}=}\NormalTok{ breaks[max\_ind }\SpecialCharTok{+} 
+        \DecValTok{1}\NormalTok{]) \{}
+\NormalTok{        point\_type[i] }\OtherTok{\textless{}{-}} \StringTok{"Noise"}
+        \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(first\_conversion)) \{}
+\NormalTok{            first\_noise\_band }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(first\_noise\_band, filtered\_cluster[i])}
+\NormalTok{        \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{            second\_noise\_band }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(second\_noise\_band, filtered\_cluster[i])}
+\NormalTok{        \}}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (breaks[second\_max\_ind] }\SpecialCharTok{\textless{}=}\NormalTok{ filtered\_cluster[i] }\SpecialCharTok{\&}\NormalTok{ filtered\_cluster[i] }\SpecialCharTok{\textless{}=} 
+\NormalTok{        breaks[second\_max\_ind }\SpecialCharTok{+} \DecValTok{1}\NormalTok{]) \{}
+\NormalTok{        point\_type[i] }\OtherTok{\textless{}{-}} \StringTok{"Signal"}
+\NormalTok{        signal }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(signal, filtered\_cluster[i])}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{        point\_type[i] }\OtherTok{\textless{}{-}} \StringTok{"Conversion"}
+        \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.null}\NormalTok{(signal)) \{}
+\NormalTok{            first\_conversion }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(first\_conversion, filtered\_cluster[i])}
+\NormalTok{        \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{            second\_conversion }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(second\_conversion, filtered\_cluster[i])}
+\NormalTok{        \}}
+\NormalTok{    \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colored\_cluster }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{ptime =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1024}\NormalTok{, }\AttributeTok{pdta =}\NormalTok{ filtered\_cluster, }\AttributeTok{ptypes =}\NormalTok{ point\_type)}
+\NormalTok{col\_pic }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(colored\_cluster, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ ptime, }\AttributeTok{y =}\NormalTok{ pdta)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.9}\NormalTok{, }
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ ptypes)) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{color =} \StringTok{"Type"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Time"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{)}
+\NormalTok{pic }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(preffered\_cluster), }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1024}\NormalTok{, }\AttributeTok{y =}\NormalTok{ preffered\_cluster)) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Time"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{)}
+\NormalTok{smoothed\_pic }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(filtered\_cluster), }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{1024}\NormalTok{, }\AttributeTok{y =}\NormalTok{ filtered\_cluster)) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.1}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Time"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"resources}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{wave\_pic.pdf"}\NormalTok{, pic, }\AttributeTok{device =} \StringTok{"pdf"}\NormalTok{, }\AttributeTok{width =} \DecValTok{9}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 9 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"resources}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{wave\_smoothed\_pic.pdf"}\NormalTok{, smoothed\_pic, }\AttributeTok{device =} \StringTok{"pdf"}\NormalTok{, }\AttributeTok{width =} \DecValTok{9}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 9 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"resources}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{wave\_colored\_pic.pdf"}\NormalTok{, col\_pic, }\AttributeTok{device =} \StringTok{"pdf"}\NormalTok{, }\AttributeTok{width =} \DecValTok{9}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 9 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pdf}\NormalTok{(}\StringTok{"resources}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{wave\_hist.pdf"}\NormalTok{)}
+\NormalTok{hist\_pic }\OtherTok{\textless{}{-}} \FunctionTok{hist}\NormalTok{(filtered\_cluster, }\AttributeTok{breaks =}\NormalTok{ breaks, }\AttributeTok{plot =}\NormalTok{ F)}
+\NormalTok{hist\_pic}\SpecialCharTok{$}\NormalTok{density }\OtherTok{\textless{}{-}}\NormalTok{ hist\_pic}\SpecialCharTok{$}\NormalTok{counts}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(hist\_pic}\SpecialCharTok{$}\NormalTok{counts)}
+\FunctionTok{plot}\NormalTok{(hist\_pic, }\AttributeTok{freq =}\NormalTok{ F, }\AttributeTok{col =} \StringTok{"palegreen2"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Value"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Density"}\NormalTok{, }\AttributeTok{main =} \StringTok{""}\NormalTok{)}
+\FunctionTok{grid}\NormalTok{(}\AttributeTok{col =} \StringTok{"grey60"}\NormalTok{)}
+\NormalTok{dummy\_val }\OtherTok{\textless{}{-}} \FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{band }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(first\_noise\_band, first\_conversion, signal, second\_conversion, second\_noise\_band)}
+\NormalTok{partition }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\NormalTok{subcluster\_type }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\StringTok{"\textless{}d2\textgreater{}\textless{}e8\textgreater{}\textless{}ef\textgreater{}"}\NormalTok{, }\StringTok{"\textless{}d4\textgreater{}\textless{}ee\textgreater{}\textless{}ed\textgreater{}"}\NormalTok{, }\StringTok{"\textless{}cf\textgreater{}\textless{}e5\textgreater{}\textless{}f0\textgreater{}\textless{}e5\textgreater{}\textless{}f5\textgreater{}\textless{}ee\textgreater{}\textless{}e4\textgreater{}"}\NormalTok{, }
+    \StringTok{"\textless{}d1\textgreater{}\textless{}e8\textgreater{}\textless{}e3\textgreater{}\textless{}ed\textgreater{}\textless{}e0\textgreater{}\textless{}eb\textgreater{}"}\NormalTok{, }\StringTok{"\textless{}cf\textgreater{}\textless{}e5\textgreater{}\textless{}f0\textgreater{}\textless{}e5\textgreater{}\textless{}f5\textgreater{}\textless{}ee\textgreater{}\textless{}e4\textgreater{}"}\NormalTok{, }\StringTok{"\textless{}d4\textgreater{}\textless{}ee\textgreater{}\textless{}ed\textgreater{}"}\NormalTok{)}
+\NormalTok{f\_test }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =} \FunctionTok{length}\NormalTok{(band))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(band)) \{}
+\NormalTok{    defining\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq\_along}\NormalTok{(band[[i]])}
+\NormalTok{    defining\_seq }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(defining\_seq, partition[i], }\AttributeTok{labels =}\NormalTok{ F)}
+\NormalTok{    sub\_band\_size }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =} \FunctionTok{length}\NormalTok{(partition[i]))}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{max}\NormalTok{(defining\_seq)) \{}
+\NormalTok{        sub\_band\_size[j] }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{which}\NormalTok{(defining\_seq }\SpecialCharTok{==}\NormalTok{ j))}
+\NormalTok{    \}}
+\NormalTok{    sub\_band }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(band[[i]], }\FunctionTok{cut}\NormalTok{(defining\_seq, partition[i], }\AttributeTok{labels =}\NormalTok{ F))}
+\NormalTok{    si\_2 }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{foreach}\NormalTok{(}\AttributeTok{k =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(sub\_band)) }\SpecialCharTok{\%do\%} \FunctionTok{var}\NormalTok{(sub\_band[[k]]))}
+\NormalTok{    si\_intaG\_2 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(si\_2)}
+\NormalTok{    mean\_vect }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{foreach}\NormalTok{(}\AttributeTok{l =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(sub\_band)) }\SpecialCharTok{\%do\%} \FunctionTok{mean}\NormalTok{(sub\_band[[l]]))}
+\NormalTok{    mean\_vect }\OtherTok{\textless{}{-}}\NormalTok{ (mean\_vect }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(mean\_vect))}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ sub\_band\_size}
+\NormalTok{    si\_inteG\_2 }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(mean\_vect)}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(sub\_band\_size)}
+\NormalTok{    f\_test[i] }\OtherTok{\textless{}{-}}\NormalTok{ si\_inteG\_2}\SpecialCharTok{/}\NormalTok{si\_intaG\_2}
+\NormalTok{\}}
+\NormalTok{band\_num }\OtherTok{\textless{}{-}} \FunctionTok{append}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(f\_test)), }\StringTok{"\textless{}cf\textgreater{}\textless{}f0\textgreater{}\textless{}ee\textgreater{}\textless{}ec\textgreater{}\textless{}e5\textgreater{}\textless{}e6\textgreater{}\textless{}f3\textgreater{}\textless{}f2\textgreater{}\textless{}ee\textgreater{}\textless{}ea\textgreater{}"}\NormalTok{, }
+    \AttributeTok{after =} \DecValTok{0}\NormalTok{)}
+\NormalTok{f\_test }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(f\_test, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\NormalTok{f\_test }\OtherTok{\textless{}{-}} \FunctionTok{foreach}\NormalTok{(}\AttributeTok{m =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(f\_test)) }\SpecialCharTok{\%do\%} \FunctionTok{paste}\NormalTok{(}\FunctionTok{toString}\NormalTok{(f\_test[m]), }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{hline "}\NormalTok{)}
+\NormalTok{f\_test }\OtherTok{\textless{}{-}} \FunctionTok{append}\NormalTok{(f\_test, }\StringTok{"\textless{}ca\textgreater{}\textless{}f0\textgreater{}\textless{}e8\textgreater{}\textless{}f2\textgreater{}\textless{}e5\textgreater{}\textless{}f0\textgreater{}\textless{}e8\textgreater{}\textless{}e9\textgreater{} \textless{}d4\textgreater{}\textless{}e8\textgreater{}\textless{}f8\textgreater{}\textless{}e5\textgreater{}\textless{}f0\textgreater{}\textless{}e0\textgreater{}}\SpecialCharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{hline "}\NormalTok{, }
+    \AttributeTok{after =} \DecValTok{0}\NormalTok{)}
+\NormalTok{col\_names }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"\textless{}cf\textgreater{}\textless{}f0\textgreater{}\textless{}ee\textgreater{}\textless{}ec\textgreater{}\textless{}e5\textgreater{}\textless{}e6\textgreater{}\textless{}f3\textgreater{}\textless{}f2\textgreater{}\textless{}ee\textgreater{}\textless{}ea\textgreater{}"}\NormalTok{, }\StringTok{"\textless{}d2\textgreater{}\textless{}e8\textgreater{}\textless{}ef\textgreater{}"}\NormalTok{, }\StringTok{"\textless{}ca\textgreater{}\textless{}ee\textgreater{}\textless{}eb\textgreater{}\textless{}e8\textgreater{}\textless{}f7\textgreater{}\textless{}e5\textgreater{}\textless{}f1\textgreater{}\textless{}f2\textgreater{}\textless{}e2\textgreater{}\textless{}ee\textgreater{} \textless{}f0\textgreater{}\textless{}e0\textgreater{}\textless{}e7\textgreater{}\textless{}e1\textgreater{}\textless{}e8\textgreater{}\textless{}e5\textgreater{}\textless{}ed\textgreater{}\textless{}e8\textgreater{}\textless{}e9\textgreater{}"}\NormalTok{, }
+    \StringTok{"\textless{}ca\textgreater{}\textless{}f0\textgreater{}\textless{}e8\textgreater{}\textless{}f2\textgreater{}\textless{}e5\textgreater{}\textless{}f0\textgreater{}\textless{}e8\textgreater{}\textless{}e9\textgreater{} \textless{}d4\textgreater{}\textless{}e8\textgreater{}\textless{}f8\textgreater{}\textless{}e5\textgreater{}\textless{}f0\textgreater{}\textless{}e0\textgreater{}}\SpecialCharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{hline "}\NormalTok{)}
+\NormalTok{partition }\OtherTok{\textless{}{-}} \FunctionTok{append}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(partition), }\StringTok{"\textless{}ca\textgreater{}\textless{}ee\textgreater{}\textless{}eb\textgreater{}\textless{}e8\textgreater{}\textless{}f7\textgreater{}\textless{}e5\textgreater{}\textless{}f1\textgreater{}\textless{}f2\textgreater{}\textless{}e2\textgreater{}\textless{}ee\textgreater{} \textless{}f0\textgreater{}\textless{}e0\textgreater{}\textless{}e7\textgreater{}\textless{}e1\textgreater{}\textless{}e8\textgreater{}\textless{}e5\textgreater{}\textless{}ed\textgreater{}\textless{}e8\textgreater{}\textless{}e9\textgreater{}"}\NormalTok{, }
+    \AttributeTok{after =} \DecValTok{0}\NormalTok{)}
+\NormalTok{content }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(band\_num, subcluster\_type, partition, f\_test)}
+\FunctionTok{write.table}\NormalTok{(content, }\AttributeTok{file =} \StringTok{"resources}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{wave\_f\_test.tex"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"\&"}\NormalTok{, }\AttributeTok{col.names =}\NormalTok{ F, }
+    \AttributeTok{row.names =}\NormalTok{ F, }\AttributeTok{fileEncoding =} \StringTok{"UTF{-}8"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

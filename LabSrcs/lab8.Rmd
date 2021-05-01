@@ -1,0 +1,110 @@
+---
+title: "Presentation"
+output:
+  pdf_document:
+    extra_dependencies:
+      babel : ["english", "russian"]
+    keep_tex: true
+    latex_engine: xelatex
+---
+
+```{r include=FALSE}
+library(kableExtra)
+library(rmutil)
+library(MASS)
+library(ggplot2)
+library(latex2exp)
+library(cowplot)
+library(foreach)
+```
+
+```{r tidy = TRUE}
+dta <- scan("resources\\wave_ampl.txt", sep = ",")
+cluster <- split(dta, ceiling(seq_along(dta) / 1024))
+```
+
+```{r tidy = TRUE}
+preffered_cluster <- unlist(cluster[75])
+filtered_cluster <- runmed(preffered_cluster, k = 3)
+k <- 30
+breaks <- seq(min(filtered_cluster), max(filtered_cluster), l = k + 1)
+h <- hist(filtered_cluster, breaks = breaks, plot = F)
+max_ind <- which.max(h$counts)
+second_max_ind <- which(h$counts == max(h$counts[-max_ind]))
+point_type <- vector(mode = "character", length = 1024)
+first_noise_band <- c()
+second_noise_band <- c()
+signal <- c()
+first_conversion <- c()
+second_conversion <- c()
+for (i in 1:1024) {
+  if (breaks[max_ind] <= filtered_cluster[i] & filtered_cluster[i] <= breaks[max_ind + 1]) {
+    point_type[i] <- "Noise"
+    if (is.null(first_conversion)) {
+      first_noise_band <- c(first_noise_band, filtered_cluster[i])
+    }
+    else {
+      second_noise_band <- c(second_noise_band, filtered_cluster[i])
+    }
+  }
+  else if (breaks[second_max_ind] <= filtered_cluster[i] & filtered_cluster[i] <= breaks[second_max_ind + 1]) {
+    point_type[i] <- "Signal"
+    signal <- c(signal, filtered_cluster[i])
+  }
+  else {
+    point_type[i] <- "Conversion"
+    if (is.null(signal)) {
+      first_conversion <- c(first_conversion, filtered_cluster[i])
+    } else {
+      second_conversion <- c(second_conversion, filtered_cluster[i])
+    }
+  }
+}
+```
+
+```{r tidy = TRUE}
+colored_cluster <- data.frame(ptime = 1:1024, pdta = filtered_cluster, ptypes = point_type)
+col_pic <- ggplot(colored_cluster, aes(x = ptime, y = pdta)) + geom_point(size = .9, aes(color = ptypes)) + labs(color = 'Type', x = "Time", y = "Value") 
+pic <- ggplot(data.frame(preffered_cluster), aes(x = 1:1024, y = preffered_cluster)) + geom_point(size = .1) + labs(x = "Time", y = "Value")
+smoothed_pic <- ggplot(data.frame(filtered_cluster), aes(x = 1:1024, y = filtered_cluster)) + geom_point(size = .1) + labs(x = "Time", y = "Value")
+ggsave("resources\\wave_pic.pdf", pic, device = "pdf", width = 9)
+ggsave("resources\\wave_smoothed_pic.pdf", smoothed_pic, device = "pdf", width = 9)
+ggsave("resources\\wave_colored_pic.pdf", col_pic, device = "pdf", width = 9)
+pdf("resources\\wave_hist.pdf")
+hist_pic <- hist(filtered_cluster, breaks = breaks, plot = F)
+hist_pic$density <- hist_pic$counts / sum(hist_pic$counts)
+plot(hist_pic, freq = F, col = "palegreen2", xlab = "Value", ylab = "Density", main = "")
+grid(col = "grey60")
+dummy_val <- dev.off()
+
+```
+
+```{r tidy = TRUE}
+band <- list(first_noise_band, first_conversion, signal, second_conversion, second_noise_band)
+partition <- c(8,8,8,8,8)
+subcluster_type <- list("Тип", "Фон", "Переход", "Сигнал", "Переход", "Фон")
+f_test <- vector(mode = "numeric", length = length(band))
+for (i in 1:length(band)) {
+  defining_seq <- seq_along(band[[i]])
+  defining_seq <- cut(defining_seq, partition[i], labels = F)
+  sub_band_size <- vector(mode = "numeric", length = length(partition[i]))
+  for (j in 1:max(defining_seq)) {
+    sub_band_size[j] <- length(which(defining_seq == j))
+  }
+  sub_band <- split(band[[i]],cut(defining_seq, partition[i], labels = F))
+  si_2 <- unlist(foreach(k = 1:length(sub_band)) %do% var(sub_band[[k]]))
+  si_intaG_2 <- mean(si_2)
+  mean_vect <- unlist(foreach(l = 1:length(sub_band)) %do% mean(sub_band[[l]]))
+  mean_vect <- (mean_vect - mean(mean_vect)) ** 2 * sub_band_size
+  si_inteG_2 <- sum(mean_vect) / sum(sub_band_size)
+  f_test[i] <- si_inteG_2 / si_intaG_2
+}
+band_num <-  append(as.list(1:length(f_test)), "Промежуток", after = 0)
+f_test <- round(f_test, digits = 2)
+f_test <- foreach(m = 1:length(f_test)) %do% paste(toString(f_test[m]), r"(\\\hline )")
+f_test <- append(f_test, r"(Критерий Фишера\\\hline )", after = 0)
+col_names <- c("Промежуток", "Тип", "Количество разбиений", r"(Критерий Фишера\\\hline )")
+partition <- append(as.list(partition), "Количество разбиений", after = 0)
+content <- cbind(band_num, subcluster_type, partition, f_test)
+write.table(content, file = "resources\\wave_f_test.tex", sep = "&", col.names = F, row.names = F, fileEncoding = "UTF-8")
+```
