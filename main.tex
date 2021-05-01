@@ -25,6 +25,7 @@
     \item Найти оценки коэффициентов линейной регрессии $y_i=a+b x_i + e_i$, используя 20 точек на отрезке $[-1.8,2]$ с равномерным шагом, равным $0.2$. Ошибку $e_i$ считать нормально распределенной с параметрами $(0,1)$. В качестве эталонной зависимости взять $y_i=2+2x_i+e_i$. При построении оценок использовать 2 критерия: критерий наименьших квадратов и критерий наименьших модулей. Проделать то же самое для выборки, у которой в значения $y_1$ и $y_{20}$ вносятся возмущения $10$ и $-10$.
     \item Сгенерировать выборку объемом 100 элементов для стандартного нормального распределения. В качестве основной гипотезы $H_0$ считать, что наблюдаемая выборка принадлежит стандартному нормальному распределению. Проверить основную гипотезу, используя критерий согласия $\chi^2$. В качестве уровня значимости взять $\alpha=0.05$. Привести таблицу вычислений $\chi^2$.\\
     Исследовать точность критерия $\chi^2\;-$ сгенерировать выборки равномерного распределения и распределения Лапласа объемом 20 элементов и проверить их на нормальность.
+    \item Провести дисперсионный анализ с применением критерия Фишера по данным регистраторов для одного сигнала. Определить области однородности сигнала, переходные области, фон.\\Длина сигнала равна 1024.
 \end{enumerate}
 \section{Теория}
 \subsection{Двумерное нормальное распределение}
@@ -124,6 +125,9 @@
     q_y^*=\frac{y_{(j)}-y_{(l)}}{k_q(n)},\;\;q_x^*=\frac{x_{(j)}-x_{(l)}}{k_q(n)},
 \end{equation}
 \begin{equation*}
+    k_q(20)=1.491.
+\end{equation*}
+\begin{equation*}
     \sign{z} = [z>0] - [z<0],\;\;[\,.\,]-\text{скобка Айверсона},
 \end{equation*}
 \begin{equation*}
@@ -136,9 +140,6 @@
 \begin{equation}
     y = \widehat{\beta}_{0R}+\widehat{\beta}_{1R} x.
 \end{equation}
-\begin{equation*}
-    k_q(20)=1.491.
-\end{equation*}
 \subsection{Проверка гипотезы о законе распределения генеральной совокупности. Метод хи-квадрат}
 Выдвинута гипотеза $H_0$ о генеральном законе распределения с функцией
 распределения $F(x)$.\\
@@ -164,24 +165,57 @@
 
         \end{enumerate}
 \end{enumerate}
-\section{Реализация}
-Лабораторная работа выполнена на языках Python и R в средах PyCharm, Jupyter Notebook, R Studio с использованием следующих библиотек:
+\subsection{Дисперсионный анализ с применением критерия Фишера}
+Пусть дана выборка
+\begin{equation*}
+    X = \{x_1,\hdots, x_n\},
+\end{equation*}
+разделенная на $k$ подвыборок вида
+\begin{equation*}
+    X_1 = \{x_{11},\hdots, x_{1n_1}\},
+\end{equation*}
+\begin{equation*}
+    \hdots
+\end{equation*}
+\begin{equation*}
+    X_k = \{x_{k1},\hdots, x_{kn_k}\}.
+\end{equation*}
+\begin{equation*}
+    X=\bigcup_{1\leq i\leq k} X_i,
+\end{equation*}
+\begin{equation*}
+    i\neq j\Longrightarrow X_i \cap X_j = \varnothing.
+\end{equation*}
+Пусть $s_i^2$ и $\overline{X}_i\;-$ дисперсия и среднее подвыборки $X_i$. Величина
+\begin{equation*}
+    \overline{X}=\dfrac{1}{k}\sum_{i=1}^k \overline{X}_i
+\end{equation*}
+называется средней общей. Внутригрупповой дисперсией называется величина вида
+\begin{equation}
+    \widehat{\sigma}^2=\dfrac{1}{k}\sum_{i=1}^k s_i^2,
+\end{equation}
+а межгрупповой $-$
+\begin{equation}
+    \delta^2=\dfrac{1}{n}\sum_{i=1}^k\left(\overline{X}_i-\overline{X}\right)^2  n_i.
+\end{equation}
+Критерием Фишера $F$ называется следующее отношение:
+\begin{equation}
+    F=\dfrac{\delta^2}{\widehat{\sigma}^2}.
+\end{equation}
+\subsubsection*{Этапы разведочного анализа}
 \begin{itemize}
-    \item Python:
-    \begin{enumerate}
-        \item scipy (генерация выборок)
-        \item statsmodels (построение э. ф. р.)
-        \item matplotlib, seaborn (визуализация, построение гистограмм и боксплотов)
-        \item numpy (вычисление ряда числовых характеристик)
-    \end{enumerate}
-    \item R:
-    \begin{enumerate}
+    \item Извелечение сигнала из входных данных.
+    \item Построение и анализ гистограммы сигнала. Значения в столбце с наибольшей высотой отвечают за фон, значения в столбце со второй по величине высотой отвечают за сигнал, все остальные значения отвечают за переходы.
+    \item Фильтрация сигнала медианным фильтром с размером окна, равным 3.
+\end{itemize}
+Далее однородность каждого промежутка оценивается с помощью критерия Фишера.
+\section{Реализация}
+Лабораторная работа выполнена на языке R в средe R Studio с использованием следующих библиотек:
+\begin{enumerate}
         \item MASS (генерация выборок)
         \item kableExtra (оформление)
         \item ggplot2, cowplot (визуализация данных)
-        
 \end{enumerate}
-\end{itemize}
 \section{Результаты}
 \subsection{Выборочные коэффициенты корреляции}
 \begin{table}[H]
@@ -260,11 +294,11 @@
 \subsection{Оценки коэффициентов линейной регрессии}
 \subsubsection{Выборка без возмущения}
 \begin{itemize}
-    \item Критерий наименьших квадратов:
+    \item Критерий наименьших квадратов (LS):
     \[
     \input{LabSrcs/resources/us_LS_coeffs}.
     \]
-    \item Критерий наименьших модулей:
+    \item Критерий наименьших модулей (LAD):
     \[
     \input{LabSrcs/resources/us_LAD_coeffs}.
     \]
@@ -340,10 +374,72 @@
     \input{LabSrcs/resources/chiComparisonUnif}.
 \end{equation*}
 \end{enumerate}
+\subsection{Дисперсионный анализ с применением критерия Фишера}
+В работе рассматривался сигнал с индексом 75.
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{LabSrcs/resources/wave_pic.pdf}
+        \caption{Входной сигнал}
+    \end{minipage}\hfill
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{LabSrcs/resources/wave_smoothed_pic.pdf}
+        \caption{Очищенный входной сигнал}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width =0.7\textwidth]{LabSrcs/resources/wave_hist.pdf}
+    \caption{Гистограмма сигнала}
+    \label{fig:histsig}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width =0.9\textwidth]{LabSrcs/resources/wave_colored_pic.pdf}
+    \caption{Разделение областей для очищенного сигнала}
+    \label{fig:colwave}
+\end{figure}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+         \input{LabSrcs/resources/wave_f_test}
+    \end{tabular}
+    \caption{Характеристики выделенных областей}
+    \label{tab:ftesttab}
+\end{table}
 \section{Обсуждение}
+\subsection{Выборочные коэффициенты корреляции и эллипсы рассеивания}
+\begin{itemize}
+    \item \begin{enumerate}
+    \item Для двумерного нормального распределения выполняется следующее соотношение:
+    \begin{equation*}
+        D(r)\leq D(r_S) \leq D(r_Q).
+    \end{equation*}
+    \item Для смеси нормальных распределений выполняется следующее соотношение:
+    \begin{equation*}
+        D(r_Q)< D(r_S)< D(r).
+    \end{equation*}
+\end{enumerate}
+\item В каждом из экспериментов эллипс рассеивания покрывает не менее $95\%$ элементов выборки, то есть полученный результат согласуется с теоретическими ождианиями.  
+\end{itemize}
+\subsection{Оценки коэффициентов линейной регрессии}
+На выборке без возмущений МНК дает более точные оценки коэффициентов линейной регрессии, чем МНМ. Однако МНМ более устойчив к редким выбросам и показывает лучшие, чем МНК, результаты на выборке с возмущениями.
+\subsection{Метод хи-квадрат}
+\begin{itemize}
+    \item По результатам проверки на близость с помощью критерия $\chi^2$ гипотеза о нормальности двадцатиэлементной выборки, сгенерированной по закону $N(0,1)$, принята.
+    \item Критерий, однако, также принял гипотезу о нормальности выборок, сгенерированных по законам $L(0,\frac{1}{\sqrt{2}})$ (Лапласа) и $U(-1.5,1.5)$ (равномерная). Таким образом, метод хи-квадрат нечувствителен на выборках малого размера.
+\end{itemize}
+\subsection{Дисперсионный анализ с применением критерия Фишера}
+По результатам эксперимента можно сделать вывод, что наиболее однородными областями являются 1 фоновая область, сигнал, 2 фоновая область. Переходные области, для которых значение Фишера много больше 1, являются, таким образом, областями неоднородности.
 \section*{Примечание}
+С кодом работы и отчета можно ознакомиться по ссылке:\\\url{https://github.com/Kozlov992/MS_report5_6}\\
+Код лабораторных находится в папке LabSrcs в файлах с расширением .pdf.
 \begin{thebibliography}{9}
 \bibitem{book1} 
  Вероятностные разделы математики. Учебник для бакалавров технических направлений.//Под ред. Максимова Ю.Д. $-$ Спб.: <<Иван Федоров>>, 2001. $-$ 592 c., илл.
+
 \end{thebibliography}
 \end{document}
