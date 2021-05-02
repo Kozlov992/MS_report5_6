@@ -42,3 +42,19 @@
 \fancyhead{}
 \fancyfoot{}
 \fancyfoot[R]{\thepage}
+
+
+\usepackage{esint}
+
+\makeatletter
+%% make esint definition in line with amsmath
+\@for\next:={int,iint,iiint,iiiint,dotsint,oint,oiint,sqint,sqiint,
+  ointctrclockwise,ointclockwise,varointclockwise,varointctrclockwise,
+  fint,varoiint,landupint,landdownint}\do{%
+    \expandafter\edef\csname\next\endcsname{%
+      \noexpand\DOTSI
+      \expandafter\noexpand\csname\next op\endcsname
+      \noexpand\ilimits@
+    }%
+  }
+\makeatother
