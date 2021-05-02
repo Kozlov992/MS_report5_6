@@ -145,18 +145,22 @@ Quadrant count ratio (QCR):
 \begin{Highlighting}[]
 \NormalTok{mu }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{X =} \DecValTok{0}\NormalTok{, }\AttributeTok{Y =} \DecValTok{0}\NormalTok{)}
 \NormalTok{rhos }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.9}\NormalTok{)}
+\NormalTok{C }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ (rhos}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(}\FloatTok{0.05}\NormalTok{)}
+\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(C}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ rhos))}
+\NormalTok{b }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(C}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ rhos))}
 \NormalTok{sample\_size }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{100}\NormalTok{)}
-\ControlFlowTok{for}\NormalTok{ (size }\ControlFlowTok{in}\NormalTok{ sample\_size) \{}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(rhos)) \{}
 \NormalTok{    p }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\StringTok{"list"}\NormalTok{, }\AttributeTok{length =} \FunctionTok{length}\NormalTok{(sample\_size))}
-    \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(rhos)) \{}
-\NormalTok{        K }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, rhos[i], rhos[i], }\DecValTok{1}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
-\NormalTok{        dta }\OtherTok{\textless{}{-}} \FunctionTok{mvrnorm}\NormalTok{(}\AttributeTok{n =}\NormalTok{ size, }\AttributeTok{mu =}\NormalTok{ mu, }\AttributeTok{Sigma =}\NormalTok{ K)}
-\NormalTok{        cap }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"$}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{rho ="}\NormalTok{, }\FunctionTok{toString}\NormalTok{(rhos[i]))}
-\NormalTok{        p[[i]] }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(dta), }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ X, }\AttributeTok{y =}\NormalTok{ Y)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+} 
-            \FunctionTok{stat\_ellipse}\NormalTok{(}\AttributeTok{color =} \StringTok{"darkblue"}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.05}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{caption =} \FunctionTok{TeX}\NormalTok{(cap)) }\SpecialCharTok{+} 
-            \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.caption =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{))}
+\NormalTok{    K }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, rhos[i], rhos[i], }\DecValTok{1}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
+    \ControlFlowTok{for}\NormalTok{ (j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(sample\_size)) \{}
+\NormalTok{        dta }\OtherTok{\textless{}{-}} \FunctionTok{mvrnorm}\NormalTok{(}\AttributeTok{n =}\NormalTok{ sample\_size[j], }\AttributeTok{mu =}\NormalTok{ mu, }\AttributeTok{Sigma =}\NormalTok{ K)}
+\NormalTok{        cap }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"$}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{n$ ="}\NormalTok{, }\FunctionTok{toString}\NormalTok{(sample\_size[j]))}
+\NormalTok{        p[[j]] }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(dta), }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ X, }\AttributeTok{y =}\NormalTok{ Y)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+} 
+            \FunctionTok{geom\_ellipse}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x0 =} \DecValTok{0}\NormalTok{, }\AttributeTok{y0 =} \DecValTok{0}\NormalTok{, }\AttributeTok{a =}\NormalTok{ a[i], }\AttributeTok{b =}\NormalTok{ b[i], }\AttributeTok{angle =}\NormalTok{ pi}\SpecialCharTok{/}\DecValTok{4}\NormalTok{), }\AttributeTok{color =} \StringTok{"darkblue"}\NormalTok{, }
+                \AttributeTok{size =} \FloatTok{1.05}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{caption =} \FunctionTok{TeX}\NormalTok{(cap)) }\SpecialCharTok{+} \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.caption =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }
+            \AttributeTok{size =} \DecValTok{20}\NormalTok{))}
 \NormalTok{    \}}
-\NormalTok{    name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"resources}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ellipse"}\NormalTok{, }\FunctionTok{toString}\NormalTok{(size), }\StringTok{".pdf"}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
+\NormalTok{    name }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"resources}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ellipse\_rho\_"}\NormalTok{, }\FunctionTok{toString}\NormalTok{(rhos[i]), }\StringTok{".pdf"}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
     \FunctionTok{ggsave}\NormalTok{(name, }\FunctionTok{plot\_grid}\NormalTok{(}\AttributeTok{plotlist =}\NormalTok{ p, }\AttributeTok{nrow =} \DecValTok{1}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{), }\AttributeTok{device =} \StringTok{"pdf"}\NormalTok{, }\AttributeTok{width =} \DecValTok{15}\NormalTok{)}
 \NormalTok{\}}
 \end{Highlighting}
