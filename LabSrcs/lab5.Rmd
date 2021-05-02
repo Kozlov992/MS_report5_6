@@ -13,6 +13,7 @@ library(kableExtra)
 library(rmutil)
 library(MASS)
 library(ggplot2)
+library(ggforce)
 library(latex2exp)
 library(cowplot)
 ```
@@ -34,17 +35,20 @@ qcr <- function(X, Y) {
 
 ```{r tidy = TRUE}
 mu <- c(X = 0, Y = 0)
-rhos <- c(0,0.5,0.9)
+rhos <- c(0.9)
+C <- 2 * (rhos ** 2 - 1) * log(0.05)
+a <- sqrt(C/(1-rhos))
+b <- sqrt(C/(1+rhos))
 sample_size <- c(20, 60, 100)
-for (size in sample_size) {
+for (i in 1:length(rhos)) {
   p <- vector("list", length = length(sample_size))
-  for (i in 1:length(rhos)) {
-    K <- matrix(c(1, rhos[i], rhos[i], 1), nrow = 2, ncol = 2)
-    dta <- mvrnorm(n = size, mu = mu, Sigma = K)
-    cap <- paste("$\\rho =", toString(rhos[i]))
-    p[[i]] <- ggplot(data.frame(dta), mapping = aes(x = X, y = Y))+ geom_point(color = "red") + stat_ellipse(color = "darkblue", size = 1.05) + labs(caption = TeX(cap)) + theme(plot.caption = element_text(hjust = 0.5, size = 20))
+  K <- matrix(c(1, rhos[i], rhos[i], 1), nrow = 2, ncol = 2)
+  for (j in 1:length(sample_size)) {
+    dta <- mvrnorm(n = sample_size[j], mu = mu, Sigma = K)
+    cap <- paste("$\\n$ =", toString(sample_size[j]))
+    p[[j]] <- ggplot(data.frame(dta), mapping = aes(x = X, y = Y))+ geom_point(color = "red") + geom_ellipse(aes(x0 = 0, y0 = 0, a = a[i], b = b[i], angle = pi / 4), color="darkblue", size = 1.05, n = 1000) + labs(caption = TeX(cap)) + theme(plot.caption = element_text(hjust = 0.5, size = 20))
   }
-  name <- paste("resources\\ellipse", toString(size), ".pdf", sep = "")
+  name <- paste("resources\\ellipse_rho_", toString(rhos[i]), ".pdf", sep = "")
   ggsave(name, plot_grid(plotlist = p, nrow = 1, ncol = 3), device = "pdf", width = 15)
 }
 ```
@@ -149,5 +153,6 @@ for (size in sample_size) {
     column_spec(1, border_left = T) %>% column_spec(4, border_right = T) %>% save_kable(file_name)
 }
 ```
+
 
 
