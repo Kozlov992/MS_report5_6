@@ -273,6 +273,78 @@
     \label{tab:mixture}
 \end{table}
 \subsection{Эллипсы рассеивания}
+Положим $C=k^2$. Так как $\sigma_x=\sigma_y=1,\;\overline{x}=\overline{y}=0$, то во всех 3 случаях уравнение эллипса будет иметь вид
+\begin{equation*}
+    E:x^2-2\rho xy + y^2=k^2,
+\end{equation*}
+а функция плотности вероятности $-$
+\begin{equation*}
+    f(x,y)=\dfrac{1}{2\pi\sqrt{1-\rho^2}}\cdot e^{-\frac{1}{2(1-\rho^2)}(x^2-2\rho xy + y^2)}.
+\end{equation*}
+Тогда
+\begin{equation*}
+ \mathbf{P}\left((X,Y)\subset E\right)=\iint \limits_{E}f(x,y) dx dy.
+\end{equation*}
+Обозначим интеграл за $I$. Произведем замену
+\begin{equation*}
+    \begin{cases}
+    x=\frac{x_1}{\sqrt{2}}+\frac{y_1}{\sqrt{2}},\\
+    y=-\frac{x_1}{\sqrt{2}}+\frac{y_1}{\sqrt{2}}.
+    \end{cases}
+\end{equation*}
+Якобиан такого отображения равен 1.\\
+$E$ в данном случае примет вид
+\begin{equation*}
+    E_1:(1+\rho)x_1^2+(1-\rho)y_1^2=k^2.
+\end{equation*}
+Интеграл равен
+\begin{equation*}
+    I=\dfrac{1}{2\pi\sqrt{1-\rho^2}}\iint \limits_{E_1}e^{-\frac{1}{2(1-\rho^2)}((1+\rho)x_1^2+(1-\rho)y_1^2)}dx_1 dy_1.
+\end{equation*}
+Повторно произведем замену
+\begin{equation*}
+    \begin{cases}
+    x_1=\dfrac{u}{\sqrt{1+\rho}},\\
+    y_1=\dfrac{v}{\sqrt{1-\rho}}.
+    \end{cases}
+\end{equation*}
+Якобиан данного отображения равен $\dfrac{1}{\sqrt{1-\rho^2}}$.\\
+$E_1$ принимает вид
+\begin{equation*}
+    R: u^2+v^2=k^2.
+\end{equation*}
+Интеграл равен
+\begin{equation*}
+    I=\dfrac{1}{2\pi(1-\rho^2)}\iint \limits_{R}e^{-\frac{1}{2(1-\rho^2)}(u^2+v^2)}du dv.
+\end{equation*}
+Переход к полярной системе координат:
+\begin{equation*}
+    \begin{cases}
+    u=r\sin{\varphi},\\
+    v=r\cos{\varphi}.
+    \end{cases}
+\end{equation*}
+Якобиан преобразования равен $r$.\\
+\begin{equation*}
+    I=\dfrac{1}{2\pi(1-\rho^2)}\int\limits_{0}^{2\pi}d\varphi\int\limits_{0}^{k}r e^{-\frac{r^2}{2(1-\rho^2)}}dr=1-\exp\left\{-\dfrac{k^2}{2(1-\rho^2)}\right\}.
+\end{equation*}
+Определим $C$ для $95\%$-процентной доверительной области:
+\begin{equation*}
+    0.95=1-\exp\left\{-\dfrac{k^2}{2(1-\rho^2)}\right\}\Longrightarrow \exp\left\{-\dfrac{k^2}{2(1-\rho^2)}\right\}=0.05\Longrightarrow -\dfrac{k^2}{2(1-\rho^2)}=\ln{0.05},
+\end{equation*}
+\begin{equation*}
+    C=k^2=2(\rho^2-1)\ln{0.05}\,.
+\end{equation*}
+Тогда
+\begin{equation*}
+    \text{Для }\rho=0:C=-2\ln{0.05}\approx6,
+\end{equation*}
+\begin{equation*}
+    \text{Для }\rho=0.5:C=-2\ln{0.05}\approx4.5,
+\end{equation*}
+\begin{equation*}
+    \text{Для }\rho=0.9:C=-2\ln{0.05}\approx1.14,
+\end{equation*}
 \begin{figure}[H]
     \centering
     \includegraphics[width = \textwidth, height = 7 cm]{LabSrcs/resources/ellipse20.pdf}
